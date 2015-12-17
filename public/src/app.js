@@ -1,23 +1,53 @@
-// npm install --save react react-dom babelify babel-preset-react babel-preset-es2015
-
-var cinemas = [
-    {id: 1, name: 'Cineplex East Finchley', postCode: 'N2 0DA'},
-    {id: 2, name: 'Barnet Multiplex', postCode: 'SW2 0DD'},
-    {id: 3, name: 'Odeon Camden Town', postCode: 'W1 0DD'},
-    {id: 4, name: 'Cineplex Kingsbury', postCode: 'N2 0DB'},
-    {id: 5, name: 'Cinepma City', postCode: 'NW1 0DD'},
-    {id: 6, name: 'Yelmo Multiplex', postCode: 'N2 0AD'}
+// npm install --save react react-dom babelify
+// babel-preset-react babel-preset-es2015
+const cinemas = [
+    {id: 1, name: 'Cineplex East Finchley'},
+    {id: 2, name: 'Barnet Multiplex'},
+    {id: 3, name: 'Odeon Camden Town'},
+    {id: 4, name: 'Cineplex Kingsbury'},
+    {id: 5, name: 'Cinepma City'},
+    {id: 6, name: 'Yelmo Multiplex'},
 ];
 
-var DashboardContainer = React.createClass({
-    render: function() {
+const DatePicker = React.createClass({
+    render() {
+        return(
+            <div> date a picker</div>
+        );
+    }
+});
+
+const Table = React.createClass({
+    render() {
+
+        const nodes = this.props.nodes.map(function (item) {
+            return (
+                <div key={item.id}>{item.name}</div>
+            );
+        });
+
         return (
-            <div className="dashboardContainer">container</div>
+            <div className="Table">
+            {nodes}
+            </div>
+        );
+    }
+});
+
+const DashboardContainer = React.createClass({
+    render() {
+        return (
+            <div className="dashboardContainer">
+            <DatePicker />
+            <Table nodes={this.props.cinemas}/>
+            <Table nodes={this.props.cinemas} />
+            <Table nodes={this.props.cinemas} />
+            </div>
         );
     }
 });
 
 ReactDOM.render(
-    <DashboardContainer />,
+    <DashboardContainer cinemas={cinemas}/>,
     document.getElementById('content')
-);  
+);

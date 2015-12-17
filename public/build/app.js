@@ -1,19 +1,52 @@
 'use strict';
 
-// npm install --save react react-dom babelify babel-preset-react babel-preset-es2015
+// npm install --save react react-dom babelify
+// babel-preset-react babel-preset-es2015
+var cinemas = [{ id: 1, name: 'Cineplex East Finchley' }, { id: 2, name: 'Barnet Multiplex' }, { id: 3, name: 'Odeon Camden Town' }, { id: 4, name: 'Cineplex Kingsbury' }, { id: 5, name: 'Cinepma City' }, { id: 6, name: 'Yelmo Multiplex' }];
 
-var cinemas = [{ id: 1, name: 'Cineplex East Finchley', postCode: 'N2 0DA' }, { id: 2, name: 'Barnet Multiplex', postCode: 'SW2 0DD' }, { id: 3, name: 'Odeon Camden Town', postCode: 'W1 0DD' }, { id: 4, name: 'Cineplex Kingsbury', postCode: 'N2 0DB' }, { id: 5, name: 'Cinepma City', postCode: 'NW1 0DD' }, { id: 6, name: 'Yelmo Multiplex', postCode: 'N2 0AD' }];
-
-var DashboardContainer = React.createClass({
-    displayName: 'DashboardContainer',
-
+var DatePicker = React.createClass({
+    displayName: 'DatePicker',
     render: function render() {
         return React.createElement(
             'div',
-            { className: 'dashboardContainer' },
-            'container'
+            null,
+            ' date a picker'
         );
     }
 });
 
-ReactDOM.render(React.createElement(DashboardContainer, null), document.getElementById('content'));
+var Table = React.createClass({
+    displayName: 'Table',
+    render: function render() {
+
+        var nodes = this.props.nodes.map(function (item) {
+            return React.createElement(
+                'div',
+                { key: item.id },
+                item.name
+            );
+        });
+
+        return React.createElement(
+            'div',
+            { className: 'Table' },
+            nodes
+        );
+    }
+});
+
+var DashboardContainer = React.createClass({
+    displayName: 'DashboardContainer',
+    render: function render() {
+        return React.createElement(
+            'div',
+            { className: 'dashboardContainer' },
+            React.createElement(DatePicker, null),
+            React.createElement(Table, { nodes: this.props.cinemas }),
+            React.createElement(Table, { nodes: this.props.cinemas }),
+            React.createElement(Table, { nodes: this.props.cinemas })
+        );
+    }
+});
+
+ReactDOM.render(React.createElement(DashboardContainer, { cinemas: cinemas }), document.getElementById('content'));
