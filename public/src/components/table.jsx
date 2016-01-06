@@ -1,9 +1,17 @@
-const Table = React.createClass({
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+export default class Table extends React.Component {
+
+    constructor (props) {
+        super(props);
+    }
 
     onClickShow(e) {
         const description = e.currentTarget.querySelector('.description');
         description.classList.toggle('hidden');
-    },
+    }
+
     render() {
 
         const table = this;
@@ -30,4 +38,4 @@ const Table = React.createClass({
             </div>
         );
     }
-});
+}

@@ -1,12 +1,16 @@
-// npm install --save react react-dom babelify
-// babel-preset-react babel-preset-es2015
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-// import * as Search from "search";
-const DashboardContainer = React.createClass({
+import Table from './components/table.jsx';
+import Search from './components/search.jsx';
 
-    getInitialState() {
-        return {data:[]};
-    },
+class DashboardContainer extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {data:[]};
+    }
+
     componentDidMount() {
         this.setState({data: this.props.shows});
         // $.ajax({
@@ -21,19 +25,21 @@ const DashboardContainer = React.createClass({
         //         alert('Oops, something went wrong');
         //     }.bind(this)
         // });
-    },
+    }
+
     handleType(string) {
         const newData = this.props.shows.filter(function(country) {
             return country.name.toLowerCase().indexOf(string) >= 0;
         });
         this.setState({data: newData});
-    },
+    }
+
     render() {
         return (
             <div className="dashboardContainer container">
                 <div className="row">
                     <div className="col-sm-12">
-                        <Search onType={this.handleType}/>
+                        <Search onType={this.handleType.bind(this)}/>
                     </div>
                 </div>
                 <div className="row">
@@ -47,7 +53,7 @@ const DashboardContainer = React.createClass({
             </div>
         );
     }
-});
+};
 
 ReactDOM.render(
     <DashboardContainer shows={tvshows}/>,
