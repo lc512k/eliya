@@ -11,6 +11,9 @@ const Search = React.createClass({
         this.state.str = e.target.value;
         this.props.onType(this.state.str);
     },
+
+    // Removed submit button
+    // use this for clear button
     handleSubmit(e) {
         e.preventDefault();
         this.props.onType(this.state.str);
@@ -19,29 +22,45 @@ const Search = React.createClass({
     },
     render() {
         return(
-            <form className="form-inline"  onSubmit={this.handleSubmit}>
+            <form className="form-inline" role="search" onSubmit={this.handleSubmit}>
                 <div className="form-group">
-                    <input onChange={this.handleType} type="text" className="form-control" id="exampleInputName2" placeholder="Jane Doe" ></input>
-                    <button type="submit" className="btn btn-primary" onSubmit={this.handleSubmit}>Search</button>
-                </div>
+                    <input onChange={this.handleType} type="text" className="form-control" id="exampleInputName2" placeholder="Search..." ></input>
+                </div>     
             </form>
         );
     }
 });
 
 const Table = React.createClass({
+
+    onClickShow(e) {
+        const description = e.currentTarget.querySelector('.description');
+        description.classList.toggle('hidden');
+    },
     render() {
-        const nodes = this.props.nodes.map(function (item) {
+
+        const table = this;
+
+        const rows = this.props.nodes.map(function (item) {
             return (
-                <tr key={item.id}><td>{item.name}</td></tr>
+                <tr key={item.id} onClick={table.onClickShow}>
+                    <td>
+                        {item.name}
+                        <div className="description hidden">
+                            <img src={item.image.medium} alt="image"/>
+                        </div>
+                    </td>
+                    </tr>
             );
         });
 
         return (
-            <table className="table table-striped">
-            <thead><tr><th>{this.props.title}</th></tr></thead>
-            <tbody>{nodes}</tbody>
-            </table>
+            <div>
+                <h4>{this.props.title}</h4>
+                <table className="table table-striped">
+                <tbody>{rows}</tbody>
+                </table>
+            </div>
         );
     }
 });
@@ -52,14 +71,24 @@ const DashboardContainer = React.createClass({
         return {data:[]};
     },
     componentDidMount() {
-        this.setState({data: this.props.countries});
+        this.setState({data: this.props.shows});
+        // $.ajax({
+        //     url: this.props.url,
+        //     dataType: 'json',
+        //     cache: false,
+        //     success: function (data) {
+        //         this.setState({data: data});
+        //     }.bind(this),
+        //     error: function () {
+        //         console.error(this.props.url, status, err.toString());
+        //         alert('Oops, something went wrong');
+        //     }.bind(this)
+        // });
     },
     handleType(string) {
-
-        const newData = this.props.countries.filter(function(country) {
+        const newData = this.props.shows.filter(function(country) {
             return country.name.toLowerCase().indexOf(string) >= 0;
         });
-
         this.setState({data: newData});
     },
     render() {
@@ -72,10 +101,10 @@ const DashboardContainer = React.createClass({
                 </div>
                 <div className="row">
                     <div className="col-sm-6">
-                        <Table nodes={this.state.data} title="Countries"/>
+                        <Table nodes={this.state.data} title="TV Shows"/>
                     </div>
                     <div className="col-sm-6">
-                        Info on selected country
+                        Info on selected TV Show
                     </div>
                 </div>         
             </div>
@@ -84,6 +113,6 @@ const DashboardContainer = React.createClass({
 });
 
 ReactDOM.render(
-    <DashboardContainer countries={countries}/>,
+    <DashboardContainer shows={tvshows}/>,
     document.getElementById('content')
 );
