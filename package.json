@@ -1,0 +1,28 @@
+{
+  "name": "eliya",
+  "version": "1.0.0",
+  "description": "ReactJS Flux ES2015 Bootstrap Material",
+  "main": "index.js",
+  "dependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.3.16",
+    "babel-preset-react": "^6.3.13",
+    "react": "^0.14.5",
+    "react-dom": "^0.14.5"
+  },
+  "devDependencies": {
+    "webpack": "^1.12.9"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lc512k/eliya.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lc512k/eliya/issues"
+  },
+  "homepage": "https://github.com/lc512k/eliya#readme"
+}

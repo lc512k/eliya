@@ -2,69 +2,6 @@
 // babel-preset-react babel-preset-es2015
 
 // import * as Search from "search";
-
-const Search = React.createClass({
-    getInitialState() {
-        return {str:''};
-    },
-    handleType(e) {
-        this.state.str = e.target.value;
-        this.props.onType(this.state.str);
-    },
-
-    // Removed submit button
-    // use this for clear button
-    handleSubmit(e) {
-        e.preventDefault();
-        this.props.onType(this.state.str);
-        this.state.str = '';
-
-    },
-    render() {
-        return(
-            <form className="form-inline" role="search" onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                    <input onChange={this.handleType} type="text" className="form-control" id="exampleInputName2" placeholder="Search..." ></input>
-                </div>     
-            </form>
-        );
-    }
-});
-
-const Table = React.createClass({
-
-    onClickShow(e) {
-        const description = e.currentTarget.querySelector('.description');
-        description.classList.toggle('hidden');
-    },
-    render() {
-
-        const table = this;
-
-        const rows = this.props.nodes.map(function (item) {
-            return (
-                <tr key={item.id} onClick={table.onClickShow}>
-                    <td>
-                        {item.name}
-                        <div className="description hidden">
-                            <img src={item.image.medium} alt="image"/>
-                        </div>
-                    </td>
-                    </tr>
-            );
-        });
-
-        return (
-            <div>
-                <h4>{this.props.title}</h4>
-                <table className="table table-striped">
-                <tbody>{rows}</tbody>
-                </table>
-            </div>
-        );
-    }
-});
-
 const DashboardContainer = React.createClass({
 
     getInitialState() {
