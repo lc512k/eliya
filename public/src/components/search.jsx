@@ -1,4 +1,5 @@
 import React from 'react';
+import Actions from '../actions';
 
 export default class Search extends React.Component {
 
@@ -10,6 +11,7 @@ export default class Search extends React.Component {
     handleType(e) {
         this.state.str = e.target.value;
         this.props.onType(this.state.str);
+        Actions.navigate('');
     }
 
     // Removed submit button

@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom';
 
 import Table from './components/table.jsx';
 import Search from './components/search.jsx';
+import dispatcher from './dispatcher.js';
 
+
+// TODO separate this as another view
 class DashboardContainer extends React.Component {
 
     constructor(props) {
@@ -54,6 +57,9 @@ class DashboardContainer extends React.Component {
         );
     }
 };
+// END TODO App starts here
+
+dispatcher.dispatch('APPINIT');
 
 ReactDOM.render(
     <DashboardContainer shows={tvshows}/>,
