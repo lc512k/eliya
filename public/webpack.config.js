@@ -21,7 +21,7 @@ module.exports = {
     },
     devServer: {
         proxy: {
-            '/api/test': {
+            '/api/search': {
                 target: 'http://localhost:8081/',
                 secure: false,
                 bypass: function(req, res, proxyOptions) {

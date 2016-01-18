@@ -23,7 +23,7 @@ class DashboardContainer extends React.Component {
             // url: 'http://api.ft.com/content/notifications/v1/items?apiKey=e7hyruvqbfvwecsh5mmwb9rq', //this.props.url,'http://api.tvmaze.com/search/shows?q=girls',//
             //url: 'http://api.ft.com/site/v1/pages/4c499f12-4e94-11de-8d4c-00144feabdc0/skyline-content?apiKey=e7hyruvqbfvwecsh5mmwb9rq',
             // url: 'http://api.ft.com/content/search/v1?apiKey=e7hyruvqbfvwecsh5mmwb9rq',
-            url: '/api/test',
+            url: '/api/search',
             // dataType: 'application/json',
             data: JSON.stringify({
                 "queryString": "banks"
@@ -35,6 +35,10 @@ class DashboardContainer extends React.Component {
             cache: false
         }).done(function (jqXHR, textStatus) {
             debugger
+            let articles = jqXHR.results[0].results;
+            for (let i in articles) {
+                console.log(articles[i].title.title, ': ', articles[i].summary.excerpt);
+            }
         }).fail(function (jqXHR, textStatus, errorThrown) {
             debugger
         });
