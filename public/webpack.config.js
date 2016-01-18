@@ -18,7 +18,23 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+    devServer: {
+        proxy: {
+            '/api/test': {
+                target: 'http://localhost:8081/',
+                secure: false,
+                bypass: function(req, res, proxyOptions) {
+                    debugger
+                    // console.log('PROXY')
+                    // if (req.headers.accept.indexOf('html') !== -1) {
+                    //     console.log('Skipping proxy for browser request.');
+                    //     return '/index.html';
+                    // }
+                },
+            },
+        },
+    },
 };
 
 // webpack-dev-server --progress --colors
