@@ -14,8 +14,6 @@ export default class Search extends React.Component {
         Actions.navigate('');
     }
 
-    // Removed submit button
-    // use this for clear button
     handleSubmit(e) {
         e.preventDefault();
         this.props.onType(this.state.str);

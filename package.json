@@ -4,6 +4,7 @@
   "description": "ReactJS Flux ES2015 Bootstrap Material",
   "main": "index.js",
   "dependencies": {
+    "JSON": "^1.0.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.3.16",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",

@@ -6,7 +6,7 @@ export default class Table extends React.Component {
         super(props);
     }
 
-    onClickShow(e) {
+    onClickHeadline(e) {
         const description = e.currentTarget.querySelector('.description');
         description.classList.toggle('hidden');
     }
@@ -14,14 +14,22 @@ export default class Table extends React.Component {
     render() {
 
         const table = this;
+        const searchStrLen = 5;//table.props.searchStr.length;
 
         const rows = this.props.nodes.map(function (item) {
+
+            const matchIndex = item.name.toLowerCase(). indexOf(table.props.searchStr);
+            if (matchIndex !== -1){
+                let match = item.name.substring(matchIndex, searchStrLen);
+                item.name = item.name.replace(match, '<mark>' + match + '</mark>');
+            }
+
             return (
-                <tr key={item.id} onClick={table.onClickShow}>
+                <tr key={item.id} onClick={table.onClickHeadline}>
                     <td>
-                        {item.name}
+                    <div dangerouslySetInnerHTML={{__html: item.name}} />
                         <div className="description hidden">
-                            <img src={item.image.medium} alt="image"/>
+                            <small><em>{item.summary}</em></small>
                         </div>
                     </td>
                     </tr>

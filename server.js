@@ -1,23 +1,28 @@
-var http = require('http');
-var querystring = require('querystring');
-var express = require('express');
-var app = express();
+const http = require('http');
+const JSON = require('JSON');
+const express = require('express');
+const app = express();
 
-var response = '';
+let response = '';
 
 app.post('/api/search', function (req, r) {
     console.log('api/search called');
 
     response = '';
 
-    var post_data = '{"queryString": "'+'banks'+'", "resultContext": {"aspects": ["title", "summary"]}, "queryContext": {"curations": ["ARTICLES"]}}';
-    
-    // var post_data = querystring.stringify({
-    //     queryString: "banks"
-    // });
+    const post_data = JSON.stringify({
+        queryString: 'banks',
+        resultContext: {
+            aspects: ['title', 'summary']
+        },
+        queryContext: {
+            curations: ['ARTICLES']
+        }
+    });
+
 
     // An object of options to indicate where to post to
-    var post_options = {
+    const post_options = {
         host: 'api.ft.com',
         path: '/content/search/v1?apiKey=e7hyruvqbfvwecsh5mmwb9rq',
         method: 'POST'
@@ -25,7 +30,7 @@ app.post('/api/search', function (req, r) {
 
 
     // Set up the request
-    var post_req = http.request(post_options, function(res) {
+    const post_req = http.request(post_options, function(res) {
 
         res.setEncoding('utf8');
 

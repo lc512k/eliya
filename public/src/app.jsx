@@ -5,7 +5,7 @@ import Table from './components/table.jsx';
 import Search from './components/search.jsx';
 import dispatcher from './dispatcher.js';
 
-// TODO separate this as another view
+
 class DashboardContainer extends React.Component {
 
     constructor(props) {
@@ -13,42 +13,34 @@ class DashboardContainer extends React.Component {
         this.state = {data:[]};
     }
 
-    componentDidMount() {
-        this.setState({data: this.props.shows});
-        // $.post('http://api.ft.com/content/search/v1?apiKey=e7hyruvqbfvwecsh5mmwb9rq', function (some, thing) {
-        //     debugger
-        // });
+    handleType(string) {
+        
+        this.searchStr = string;
+
+        const newData = [];
+
         $.ajax({
             type: 'POST',
-            // url: 'http://api.ft.com/content/notifications/v1/items?apiKey=e7hyruvqbfvwecsh5mmwb9rq', //this.props.url,'http://api.tvmaze.com/search/shows?q=girls',//
-            //url: 'http://api.ft.com/site/v1/pages/4c499f12-4e94-11de-8d4c-00144feabdc0/skyline-content?apiKey=e7hyruvqbfvwecsh5mmwb9rq',
-            // url: 'http://api.ft.com/content/search/v1?apiKey=e7hyruvqbfvwecsh5mmwb9rq',
             url: '/api/search',
-            // dataType: 'application/json',
             data: JSON.stringify({
-                "queryString": "banks"
+                "queryString": string
             }),
-            // headers: {
-            //     'X-Api-Key': 'e7hyruvqbfvwecsh5mmwb9rq'
-            // },
             dataType: 'json',
             cache: false
-        }).done(function (jqXHR, textStatus) {
-            debugger
+        }).done(function (jqXHR) {
+            
             let articles = jqXHR.results[0].results;
-            for (let i in articles) {
-                console.log(articles[i].title.title, ': ', articles[i].summary.excerpt);
-            }
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            debugger
-        });
-    }
 
-    handleType(string) {
-        const newData = this.props.shows.filter(function(country) {
-            return country.name.toLowerCase().indexOf(string) >= 0;
+            for (let i in articles) {
+                newData.push({name: articles[i].title.title, id: i, summary: articles[i].summary.excerpt});
+            }
+
+            this.setState({data: newData});
+
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
         });
-        this.setState({data: newData});
+        console.log(newData);
     }
 
     render() {
@@ -56,29 +48,34 @@ class DashboardContainer extends React.Component {
             <div className="dashboardContainer container">
                 <div className="row">
                     <div className="col-sm-12">
-                        <Search onType={this.handleType.bind(this)}/>
+                        <Search onType={this.debounce(this.handleType.bind(this), 600)}/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-sm-6">
-                        <Table nodes={this.state.data} title="TV Shows"/>
+                        <Table nodes={this.state.data} searchStr={this.searchStr} title="Headlines"/>
                     </div>
-                    <div className="col-sm-6">
-                        Info on selected TV Show
-                    </div>
+                    <div className="col-sm-6"></div>
                 </div>         
             </div>
         );
     }
+
+    debounce(fn, delay) {
+        let timer = null;
+        return function () {
+            let context = this, args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                fn.apply(context, args);
+            }, delay);
+        };
+    }
 };
-// END TODO App starts here
-// 
-// 
-// http://api.ft.com/content/search/v1?apiKey=e7hyruvqbfvwecsh5mmwb9rq
 
 dispatcher.dispatch('APPINIT');
 
 ReactDOM.render(
-    <DashboardContainer shows={tvshows}/>,
+    <DashboardContainer news={news}/>,
     document.getElementById('content')
 );
