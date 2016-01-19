@@ -20,7 +20,7 @@ export default class Table extends React.Component {
 
             const matchIndex = item.name.toLowerCase(). indexOf(table.props.searchStr);
             if (matchIndex !== -1){
-                let match = item.name.substring(matchIndex, searchStrLen);
+                let match = item.name.substring(matchIndex, matchIndex + searchStrLen);
                 item.name = item.name.replace(match, '<mark>' + match + '</mark>');
             }
 

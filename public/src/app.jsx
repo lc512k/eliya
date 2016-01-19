@@ -53,7 +53,7 @@ class DashboardContainer extends React.Component {
                 </div>
                 <div className="row">
                     <div className="col-sm-6">
-                        <Table nodes={this.state.data} searchStr={this.searchStr} title="Headlines"/>
+                        <Table nodes={this.state.data} searchStr={this.searchStr} title=""/>
                     </div>
                     <div className="col-sm-6"></div>
                 </div>         
